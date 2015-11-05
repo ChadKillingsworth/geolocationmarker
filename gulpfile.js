@@ -18,16 +18,32 @@ gulp.task('build', ['clean'], function() {
         compilerPath: compilerPath + 'compiler.jar',
         fileName: 'geolocation-marker.js',
         compilerFlags: {
+          compilation_level: 'SIMPLE',
+          warning_level: 'VERBOSE',
+          externs: compilerPath + 'contrib/externs/maps/google_maps_api_v3.js',
+          language_in: 'ECMASCRIPT6_STRICT',
+          language_out: 'ECMASCRIPT5_STRICT',
+        }
+      }))
+      .pipe(gulp.dest('./dist'));
+});
+
+gulp.task('build-min', ['clean'], function() {
+  return gulp.src('./src/**/*.js')
+      .pipe(compiler({
+        compilerPath: compilerPath + 'compiler.jar',
+        fileName: 'geolocation-marker.min.js',
+        compilerFlags: {
           compilation_level: 'ADVANCED',
           warning_level: 'VERBOSE',
           externs: compilerPath + 'contrib/externs/maps/google_maps_api_v3.js',
           language_in: 'ECMASCRIPT6_STRICT',
           language_out: 'ECMASCRIPT5_STRICT',
-          create_source_map: './geolocation-marker.js.map',
-          output_wrapper: '(function(){%output%}).call(this)\n//# sourceMappingURL=geolocation-marker.js.map'
+          create_source_map: './dist/geolocation-marker.min.js.map',
+          output_wrapper: '(function(){%output%}).call(this)\n//# sourceMappingURL=geolocation-marker.min.js.map'
         }
       }))
-      .pipe(gulp.dest('./'));
+      .pipe(gulp.dest('./dist'));
 });
 
 gulp.task('test', function () {
@@ -37,4 +53,4 @@ gulp.task('test', function () {
   });
 });
 
-gulp.task('default', ['build']);
+gulp.task('default', ['build', 'build-min']);
