@@ -1,0 +1,11 @@
+{
+  "name": "geolocation-marker",
+  "homepage": "https://github.com/ChadKillingsworth/geolocation-marker",
+  "authors": [
+    "Chad Killingsworth"
+  ],
+  "version": "2.0.3",
+  "description": "Geolocation Marker for Google Maps API v3",
+  "main": "dist/geolocation-marker.js",
+  "license": "Apache 2.0"
+}
