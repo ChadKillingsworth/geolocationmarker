@@ -45,6 +45,8 @@ import GeolocationMarker from './geolocation-marker';
   GeolocationMarker.prototype['setMarkerOptions'] = GeolocationMarker.prototype.setMarkerOptions;
   GeolocationMarker.prototype['setMinimumAccuracy'] = GeolocationMarker.prototype.setMinimumAccuracy;
   GeolocationMarker.prototype['setPositionOptions'] = GeolocationMarker.prototype.setPositionOptions;
+  GeolocationMarker.prototype['stopWatch'] = GeolocationMarker.prototype.stopWatch;
+  GeolocationMarker.prototype['startWatch'] = GeolocationMarker.prototype.startWatch;
 
   return GeolocationMarker;
 }));

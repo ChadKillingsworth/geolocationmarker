@@ -163,15 +163,16 @@ class GeolocationMarker extends google.maps.MVCObject {
   setMap(map) {
      google.maps.MVCObject.prototype.set.call(this, 'map', map);
      if (map) {
-       this.watchPosition_();
+       this.startWatch();
      } else {
+       this.stopWatch();
+
        this.marker_.unbind('position');
        this.circle_.unbind('center');
        this.circle_.unbind('radius');
        google.maps.MVCObject.prototype.set.call(this, 'accuracy', null);
        google.maps.MVCObject.prototype.set.call(this, 'position', null);
-       navigator.geolocation.clearWatch(this.watchId_);
-       this.watchId_ = -1;
+
        this.marker_.setMap(map);
      }
   }
@@ -215,14 +216,22 @@ class GeolocationMarker extends google.maps.MVCObject {
          !this.getPosition().equals(newPosition)) {
        // The local set method does not allow position to be updated
        google.maps.MVCObject.prototype.set.call(this, 'position', newPosition);
+
+       google.maps.event.trigger(this, 'geolocation_position', newPosition);
      }
   }
 
-  /**
-   * @private
-   */
-  watchPosition_() {
+  stopWatch() {
+    if (navigator.geolocation) {
+      navigator.geolocation.clearWatch(this.watchId_);
+      this.watchId_ = -1;
+    }
+  }
+
+  startWatch() {
      if (navigator.geolocation) {
+       this.stopWatch();
+
        this.watchId_ = navigator.geolocation.watchPosition(
            this.updatePosition_.bind(this),
            this.geolocationError_.bind(this),
